@@ -1,4 +1,5 @@
 [![GoDoc](https://godoc.org/github.com/the-go-tool/cast?status.svg)](https://godoc.org/github.com/the-go-tool/cast)
+![Coverage](https://img.shields.io/badge/Coverage-73.5%25-brightgreen)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/the-go-tool/cast)
 [![Go Report Card](https://goreportcard.com/badge/github.com/the-go-tool/cast)](https://goreportcard.com/report/github.com/the-go-tool/cast)
 
