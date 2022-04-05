@@ -68,3 +68,11 @@ And very rare case when we need to panic in case of impossible casting:
 ```go
 i := cast.MustTo[int]("non-int") // panics
 ```
+
+## Post Scriptum
+Please, star this repository if you find it helpful :star:  
+Also, [make an issue](https://github.com/the-go-tool/cast/issues)
+if you found a bug or would like for some improvements.
+
+If this module doesn't fit here is links to similar projects:
+- :link: https://github.com/spf13/cast
