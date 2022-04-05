@@ -1,7 +1,8 @@
 [![GoDoc](https://godoc.org/github.com/the-go-tool/cast?status.svg)](https://godoc.org/github.com/the-go-tool/cast)
-![Coverage](https://img.shields.io/badge/Coverage-73.5%25-brightgreen)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/the-go-tool/cast)
+![Coverage](https://img.shields.io/badge/Coverage-73.5%25-brightgreen)
 [![Go Report Card](https://goreportcard.com/badge/github.com/the-go-tool/cast)](https://goreportcard.com/report/github.com/the-go-tool/cast)
+![example workflow](https://github.com/the-go-tool/cast/actions/workflows/.github/workflows/ci.yaml/badge.svg)
 
 # :sparkles: Cast
 > Generics based GoLang library to allow type to type casting.
