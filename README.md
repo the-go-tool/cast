@@ -9,6 +9,8 @@
 > Generics based GoLang library to allow type to type casting.
 > No extra dependencies.
 
+> :construction: The module under construction! :construction:
+
 ## :package: Install
 `go get -u github.com/the-go-tool/cast`
 
