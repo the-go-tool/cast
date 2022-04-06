@@ -114,3 +114,23 @@ if you found a bug or would like for some improvements.
 
 If this module doesn't fit here is links to similar projects:
 - :link: https://github.com/spf13/cast
+
+## :arrows_counterclockwise: Default Casts
+
+| Cast From | Cast To   | Possible | Versa |
+|-----------|-----------|----------|-------|
+| string    | ints      | YES      | YES   |
+| string    | uints     | YES      | YES   |
+| string    | floats    |          |       |
+| string    | complexes |          |       |
+| string    | bool      |          |       |
+| ints      | uints     |          |       |
+| ints      | floats    |          |       |
+| ints      | complexes |          |       |
+| ints      | bool      |          |       |
+| uints     | floats    |          |       |
+| uints     | complexes |          |       |
+| uints     | bool      |          |       |
+| floats    | complexes |          |       |
+| floats    | bool      |          |       |
+| complexes | bool      |          |       |
