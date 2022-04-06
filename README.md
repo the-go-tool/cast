@@ -106,7 +106,6 @@ fmt.Println(cast.To[string](Custom(5))) // string 5
 Because we already registered _Custom -> int_ and we have default
 _int -> string_ casters just register chain _Custom -> int -> string_.
 
-
 ## :link: Similar Projects
 Please, star this repository if you find it helpful :star:  
 Also, [make an issue](https://github.com/the-go-tool/cast/issues)
