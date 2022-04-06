@@ -26,7 +26,6 @@ i := cast.To[int](str)
 
 It's possible to use any of primitive types like all types of
 **int**, **uint**, **bool**, **string** and their derivatives also.
-Learn more about [available types here](cast.go).
 Another example with custom type based on primitive value:
 
 ```go
@@ -45,7 +44,7 @@ func main() {
 }
 ```
 
-### Error handling
+### :hash: Error Handling
 We learned about most common function **cast.To**. But what if our program can't cast one type to other by some reason? For example, we're trying
 to cast string "non-int" to int. In this case we'll get int(0) and
 won't know about error via **cast.To**.
@@ -75,7 +74,40 @@ And very rare case when we need to panic in case of impossible casting:
 i := cast.MustTo[int]("non-int") // panics
 ```
 
-## Post Scriptum
+### :hash: Casting Extension
+This module has flexible API. So, you can register your own type for casting:
+
+```go
+type Custom int
+
+func init() {
+    MustRegister(func(in Custom) (out int, err error) {
+		return int(in), nil
+	})
+}
+```
+
+Now we can use _Custom -> int_ casting like so:
+
+```go
+func main() {
+    fmt.Println(cast.To[int](Custom(5))) // int 5
+}
+```
+
+It's going to be tedious to write casting function for each types.
+But this module provides casting proxies. Look:
+
+```go
+MustRegisterProxy[Custom, string, int]() // Input, Output, Proxy
+fmt.Println(cast.To[string](Custom(5))) // string 5
+```
+
+Because we already registered _Custom -> int_ and we have default
+_int -> string_ casters just register chain _Custom -> int -> string_.
+
+
+## :link: Similar Projects
 Please, star this repository if you find it helpful :star:  
 Also, [make an issue](https://github.com/the-go-tool/cast/issues)
 if you found a bug or would like for some improvements.
