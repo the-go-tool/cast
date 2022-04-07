@@ -123,9 +123,9 @@ If this module doesn't fit here is links to similar projects:
 |-----------|-----------|----------|-------|
 | string    | ints      | YES      | YES   |
 | string    | uints     | YES      | YES   |
-| string    | floats    |          |       |
-| string    | complexes |          |       |
-| string    | bool      |          |       |
+| string    | floats    | YES      | YES   |
+| string    | complexes | YES      | YES   |
+| string    | bool      | YES      | YES   |
 | ints      | uints     |          |       |
 | ints      | floats    |          |       |
 | ints      | complexes |          |       |

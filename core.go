@@ -12,6 +12,7 @@ type tag string
 var casters = map[tag]map[tag]func(in reflect.Value) (out reflect.Value, err error){}
 
 // tag returns type tag as string.
+// The tag compatible with reflect.Type().String().
 // For example:
 //   fetchTag(reflect.TypeOf(int(5))) //> int
 //   fetchTag(reflect.TypeOf(Custom(5))) //> main.Custom
