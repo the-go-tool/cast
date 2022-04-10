@@ -139,7 +139,7 @@ func init() {
 				return false, nil
 			}
 		}
-		return false, fmt.Errorf("unknown value: %s", in)
+		return false, fmt.Errorf("unknown bool value: %s", in)
 	})
 
 	MustRegister(func(in bool) (out string, err error) {
@@ -148,4 +148,251 @@ func init() {
 		}
 		return "false", nil
 	})
+}
+
+// ints -> ints -> ints
+func init() {
+	MustRegister(func(in int) (out int8, err error) {
+		return int8(in), nil
+	})
+	MustRegister(func(in int) (out int16, err error) {
+		return int16(in), nil
+	})
+	MustRegister(func(in int) (out int32, err error) {
+		return int32(in), nil
+	})
+	MustRegister(func(in int) (out int64, err error) {
+		return int64(in), nil
+	})
+
+	MustRegister(func(in int8) (out int, err error) {
+		return int(in), nil
+	})
+	MustRegister(func(in int8) (out int16, err error) {
+		return int16(in), nil
+	})
+	MustRegister(func(in int8) (out int32, err error) {
+		return int32(in), nil
+	})
+	MustRegister(func(in int8) (out int64, err error) {
+		return int64(in), nil
+	})
+
+	MustRegister(func(in int16) (out int8, err error) {
+		return int8(in), nil
+	})
+	MustRegister(func(in int16) (out int, err error) {
+		return int(in), nil
+	})
+	MustRegister(func(in int16) (out int32, err error) {
+		return int32(in), nil
+	})
+	MustRegister(func(in int16) (out int64, err error) {
+		return int64(in), nil
+	})
+
+	MustRegister(func(in int32) (out int, err error) {
+		return int(in), nil
+	})
+	MustRegister(func(in int32) (out int8, err error) {
+		return int8(in), nil
+	})
+	MustRegister(func(in int32) (out int16, err error) {
+		return int16(in), nil
+	})
+	MustRegister(func(in int32) (out int64, err error) {
+		return int64(in), nil
+	})
+
+	MustRegister(func(in int64) (out int, err error) {
+		return int(in), nil
+	})
+	MustRegister(func(in int64) (out int8, err error) {
+		return int8(in), nil
+	})
+	MustRegister(func(in int64) (out int16, err error) {
+		return int16(in), nil
+	})
+	MustRegister(func(in int64) (out int32, err error) {
+		return int32(in), nil
+	})
+}
+
+// ints -> uints -> ints
+func init() {
+	MustRegister(func(in int64) (out uint64, err error) {
+		return uint64(in), nil
+	})
+	MustRegisterProxy[int64, uint, uint64]()
+	MustRegisterProxy[int64, uint8, uint64]()
+	MustRegisterProxy[int64, uint16, uint64]()
+	MustRegisterProxy[int64, uint32, uint64]()
+
+	MustRegisterProxy[int32, uint, int64]()
+	MustRegisterProxy[int32, uint8, int64]()
+	MustRegisterProxy[int32, uint16, int64]()
+	MustRegisterProxy[int32, uint32, int64]()
+	MustRegisterProxy[int32, uint64, int64]()
+
+	MustRegisterProxy[int16, uint, int64]()
+	MustRegisterProxy[int16, uint8, int64]()
+	MustRegisterProxy[int16, uint16, int64]()
+	MustRegisterProxy[int16, uint32, int64]()
+	MustRegisterProxy[int16, uint64, int64]()
+
+	MustRegisterProxy[int8, uint, int64]()
+	MustRegisterProxy[int8, uint8, int64]()
+	MustRegisterProxy[int8, uint16, int64]()
+	MustRegisterProxy[int8, uint32, int64]()
+	MustRegisterProxy[int8, uint64, int64]()
+
+	MustRegisterProxy[int, uint, int64]()
+	MustRegisterProxy[int, uint8, int64]()
+	MustRegisterProxy[int, uint16, int64]()
+	MustRegisterProxy[int, uint32, int64]()
+	MustRegisterProxy[int, uint64, int64]()
+
+	MustRegister(func(in uint64) (out int64, err error) {
+		return int64(in), nil
+	})
+	MustRegisterProxy[uint64, int, int64]()
+	MustRegisterProxy[uint64, int8, int64]()
+	MustRegisterProxy[uint64, int16, int64]()
+	MustRegisterProxy[uint64, int32, int64]()
+
+	MustRegisterProxy[uint32, int, uint64]()
+	MustRegisterProxy[uint32, int8, uint64]()
+	MustRegisterProxy[uint32, int16, uint64]()
+	MustRegisterProxy[uint32, int32, uint64]()
+	MustRegisterProxy[uint32, int64, uint64]()
+
+	MustRegisterProxy[uint16, int, uint64]()
+	MustRegisterProxy[uint16, int8, uint64]()
+	MustRegisterProxy[uint16, int16, uint64]()
+	MustRegisterProxy[uint16, int32, uint64]()
+	MustRegisterProxy[uint16, int64, uint64]()
+
+	MustRegisterProxy[uint8, int, uint64]()
+	MustRegisterProxy[uint8, int8, uint64]()
+	MustRegisterProxy[uint8, int16, uint64]()
+	MustRegisterProxy[uint8, int32, uint64]()
+	MustRegisterProxy[uint8, int64, uint64]()
+
+	MustRegisterProxy[uint, int, uint64]()
+	MustRegisterProxy[uint, int8, uint64]()
+	MustRegisterProxy[uint, int16, uint64]()
+	MustRegisterProxy[uint, int32, uint64]()
+	MustRegisterProxy[uint, int64, uint64]()
+}
+
+// uints -> uints -> uints
+func init() {
+	MustRegister(func(in uint) (out uint8, err error) {
+		return uint8(in), nil
+	})
+	MustRegister(func(in uint) (out uint16, err error) {
+		return uint16(in), nil
+	})
+	MustRegister(func(in uint) (out uint32, err error) {
+		return uint32(in), nil
+	})
+	MustRegister(func(in uint) (out uint64, err error) {
+		return uint64(in), nil
+	})
+
+	MustRegister(func(in uint8) (out uint, err error) {
+		return uint(in), nil
+	})
+	MustRegister(func(in uint8) (out uint16, err error) {
+		return uint16(in), nil
+	})
+	MustRegister(func(in uint8) (out uint32, err error) {
+		return uint32(in), nil
+	})
+	MustRegister(func(in uint8) (out uint64, err error) {
+		return uint64(in), nil
+	})
+
+	MustRegister(func(in uint16) (out uint8, err error) {
+		return uint8(in), nil
+	})
+	MustRegister(func(in uint16) (out uint, err error) {
+		return uint(in), nil
+	})
+	MustRegister(func(in uint16) (out uint32, err error) {
+		return uint32(in), nil
+	})
+	MustRegister(func(in uint16) (out uint64, err error) {
+		return uint64(in), nil
+	})
+
+	MustRegister(func(in uint32) (out uint, err error) {
+		return uint(in), nil
+	})
+	MustRegister(func(in uint32) (out uint8, err error) {
+		return uint8(in), nil
+	})
+	MustRegister(func(in uint32) (out uint16, err error) {
+		return uint16(in), nil
+	})
+	MustRegister(func(in uint32) (out uint64, err error) {
+		return uint64(in), nil
+	})
+
+	MustRegister(func(in uint64) (out uint, err error) {
+		return uint(in), nil
+	})
+	MustRegister(func(in uint64) (out uint8, err error) {
+		return uint8(in), nil
+	})
+	MustRegister(func(in uint64) (out uint16, err error) {
+		return uint16(in), nil
+	})
+	MustRegister(func(in uint64) (out uint32, err error) {
+		return uint32(in), nil
+	})
+}
+
+// ints -> bool -> ints
+func init() {
+	MustRegister(func(in int64) (out bool, err error) {
+		return in != 0, nil
+	})
+	MustRegisterProxy[int32, bool, int64]()
+	MustRegisterProxy[int16, bool, int64]()
+	MustRegisterProxy[int8, bool, int64]()
+	MustRegisterProxy[int, bool, int64]()
+
+	MustRegister(func(in bool) (out int64, err error) {
+		if in {
+			return 1, nil
+		}
+		return 0, nil
+	})
+	MustRegisterProxy[bool, int32, int64]()
+	MustRegisterProxy[bool, int16, int64]()
+	MustRegisterProxy[bool, int8, int64]()
+	MustRegisterProxy[bool, int, int64]()
+}
+
+// uints -> bool -> uints
+func init() {
+	MustRegister(func(in uint64) (out bool, err error) {
+		return in != 0, nil
+	})
+	MustRegisterProxy[uint32, bool, uint64]()
+	MustRegisterProxy[uint16, bool, uint64]()
+	MustRegisterProxy[uint8, bool, uint64]()
+	MustRegisterProxy[uint, bool, uint64]()
+
+	MustRegister(func(in bool) (out uint64, err error) {
+		if in {
+			return 1, nil
+		}
+		return 0, nil
+	})
+	MustRegisterProxy[bool, uint32, uint64]()
+	MustRegisterProxy[bool, uint16, uint64]()
+	MustRegisterProxy[bool, uint8, uint64]()
+	MustRegisterProxy[bool, uint, uint64]()
 }

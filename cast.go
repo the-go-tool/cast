@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"reflect"
 	"testing"
+
+	"github.com/the-go-tool/cast/core"
+	"github.com/the-go-tool/cast/core/types"
 )
 
 // Register adds new way to cast one type to another.
@@ -20,7 +23,7 @@ func Register[In, Out any](caster func(in In) (out Out, err error)) error {
 	inT := reflect.TypeOf(*new(In))
 	outT := reflect.TypeOf(*new(Out))
 
-	return register(inT, outT, func(in reflect.Value) (out reflect.Value, err error) {
+	return core.Register(inT, outT, func(in reflect.Value) (out reflect.Value, err error) {
 		val, err := caster(in.Interface().(In))
 		if err != nil {
 			return out, err
@@ -63,7 +66,7 @@ func RegisterProxy[In, Out, Proxy any]() error {
 	inT := reflect.TypeOf(*new(In))
 	outT := reflect.TypeOf(*new(Out))
 	proxyT := reflect.TypeOf(*new(Proxy))
-	return registerProxy(inT, outT, proxyT)
+	return core.RegisterProxy(inT, outT, proxyT)
 }
 
 // MustRegisterProxy adds new way to cast one type to another through existing ways.
@@ -99,8 +102,11 @@ func Assert[In, Out any](in In, out Out) error {
 	if err != nil {
 		return err
 	}
+	inT := types.GetName(reflect.TypeOf(in))
+	outT := types.GetName(reflect.TypeOf(out))
+	valT := types.GetName(reflect.TypeOf(val))
 	if !reflect.DeepEqual(val, out) {
-		return fmt.Errorf("expected %#v, got %#v from %#v", out, val, in)
+		return fmt.Errorf("expected %s(%#v), got %s(%#v) from %s(%#v)", outT, out, valT, val, inT, in)
 	}
 	return nil
 }
@@ -145,7 +151,7 @@ func TestAssert[In, Out any](in In, out Out, t *testing.T) {
 //   val, err := WithError[Custom]("5") // Custom{}, "unknown caster"
 func WithError[Out any](in any) (Out, error) {
 	out := *new(Out)
-	val, err := cast(reflect.ValueOf(in), reflect.TypeOf(out))
+	val, err := core.Cast(reflect.ValueOf(in), reflect.TypeOf(out))
 	if err != nil {
 		return out, err
 	}

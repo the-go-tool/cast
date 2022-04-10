@@ -126,13 +126,17 @@ If this module doesn't fit here is links to similar projects:
 | string    | floats    | YES      | YES   |
 | string    | complexes | YES      | YES   |
 | string    | bool      | YES      | YES   |
-| ints      | uints     |          |       |
+| ints      | ints      | YES      | YES   |
+| ints      | uints     | YES      | YES   |
 | ints      | floats    |          |       |
 | ints      | complexes |          |       |
-| ints      | bool      |          |       |
+| ints      | bool      | YES      | YES   |
+| uints     | uints     | YES      | YES   |
 | uints     | floats    |          |       |
 | uints     | complexes |          |       |
-| uints     | bool      |          |       |
+| uints     | bool      | YES      | YES   |
+| floats    | floats    |          |       |
 | floats    | complexes |          |       |
 | floats    | bool      |          |       |
+| complexes | complexes |          |       |
 | complexes | bool      |          |       |
