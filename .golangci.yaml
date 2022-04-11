@@ -25,4 +25,4 @@ linters:
     # - structcheck # Go1.18 disable
     # - staticcheck # Go1.18 disable
     # - gosimple # Go1.18 disable
-    # - gosec # too many false positives
+    - gosec

@@ -9,6 +9,14 @@ import (
 	"github.com/the-go-tool/cast/core/types"
 )
 
+// Built-in casters registration.
+func init() {
+	registerRelatedXCast()
+	registerNumberXCast()
+	registerStringXCast()
+	registerBoolNumCast()
+}
+
 // Register adds new way to cast one type to another.
 //
 //   type Custom int
@@ -111,6 +119,24 @@ func Assert[In, Out any](in In, out Out) error {
 	return nil
 }
 
+// AssertError checks that one type can't be cast to another.
+//
+//   // err, it's possible casting and valid value
+//   err := Assert(5, "5")
+//   // ok, it's possible casting but invalid value
+//   err := Assert(5, "6")
+//   // ok, unknown casting way Custom->int
+//   err := Assert(Custom(5), 5)
+func AssertError[In, Out any](in In, out Out) error {
+	_, err := WithError[Out](in)
+	inT := types.GetName(reflect.TypeOf(in))
+	outT := types.GetName(reflect.TypeOf(out))
+	if err == nil {
+		return fmt.Errorf("unexpected successful casting from %s(%#v) to %s(%#v)", inT, in, outT, out)
+	}
+	return nil
+}
+
 // MustAssert checks that one type can be cast to another with correct value.
 // It panics in case of error.
 //
@@ -122,6 +148,21 @@ func Assert[In, Out any](in In, out Out) error {
 //   MustAssert(Custom(5), 5)
 func MustAssert[In, Out any](in In, out Out) {
 	if err := Assert(in, out); err != nil {
+		panic(err)
+	}
+}
+
+// MustAssertError checks that one type can't be cast to another.
+// It panics in case when error doesn't happen.
+//
+//   // panic, it's possible casting and valid value
+//   MustAssert(5, "5")
+//   // ok, it's possible casting but invalid value
+//   MustAssert(5, "6")
+//   // ok, unknown casting way Custom->int
+//   MustAssert(Custom(5), 5)
+func MustAssertError[In, Out any](in In, out Out) {
+	if err := AssertError(in, out); err != nil {
 		panic(err)
 	}
 }
@@ -139,6 +180,24 @@ func TestAssert[In, Out any](in In, out Out, t *testing.T) {
 	name := fmt.Sprintf("cast %#v to %#v", in, out)
 	t.Run(name, func(t *testing.T) {
 		if err := Assert(in, out); err != nil {
+			t.Fatal(err)
+		}
+	})
+}
+
+// TestAssertError checks that one type can't be cast to another.
+// It calls t.Fatal in case when casting successful.
+//
+//   // test failed, it's possible casting and valid value
+//   TestAssert(5, "5", t)
+//   // ok, it's possible casting but invalid value
+//   TestAssert(5, "6", t)
+//   // ok, unknown casting way Custom->int
+//   TestAssert(Custom(5), 5, t)
+func TestAssertError[In, Out any](in In, out Out, t *testing.T) {
+	name := fmt.Sprintf("cast %#v to %#v", in, out)
+	t.Run(name, func(t *testing.T) {
+		if err := AssertError(in, out); err != nil {
 			t.Fatal(err)
 		}
 	})

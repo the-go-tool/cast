@@ -109,6 +109,101 @@ fmt.Println(cast.To[string](Custom(5))) // string 5
 Because we already registered _Custom -> int_ and we have default
 _int -> string_ casters just register chain _Custom -> int -> string_.
 
+## :arrows_counterclockwise: Built-in Casters
+
+### Related Types Cross Casting (RelatedXCast)
+> Casting between related types but different sizes.
+
+```go
+To[int](int32(5)) //> int(5)
+To[uint8](uint16(500)) //> uint8(244), so 500-256=244
+To[float32](float64(6.9)) //> float32(6.9)
+To[byte](uint(5)) //> uint8(5), so byte is alias for uint8
+To[rune](int(50)) //> int32(50), so rune is alias for int32
+```
+
+| Type X    | X from/to X        |
+|-----------|--------------------|
+| ints      | :white_check_mark: |
+| uints     | :white_check_mark: |
+| floats    | :white_check_mark: |
+| complexes | :white_check_mark: |
+
+### Number Types Cross Casting (NumberXCast)
+> Casting between number types (with possible different sizes).
+
+```go
+To[int](56.6) //> int(56), only integer part
+To[float32](56) //> float32(56)
+To[uint8](int8(-40)) //> uint8(216), so 256-40=216
+To[uint64](int8(-1)) //> uint64(MAX_VALUE)
+To[float32](complex(5, -1)) //> float32(5)
+```
+
+| Type N1 | Type N2    | N1 from/to N2      |
+|---------|------------|--------------------|
+| ints    | uints      | :white_check_mark: |
+| ints    | floats     | :white_check_mark: |
+| ints    | complexes  | :white_check_mark: |
+| uints   | floats     | :white_check_mark: |
+| uints   | complexes  | :white_check_mark: |
+| floats  | complexes  | :white_check_mark: |
+
+### String Cross Casting (StringXCast)
+> Casting between string and anything basic type.
+> Usually, it's close to `strconv` standard behavior except
+> boolean.
+> 
+> Casting from string to boolean extended and accepts any
+> of `1`, `+`, `t`, `true`, `y`, `yes` as `true` and any of
+> `0`, `-`, `f`, `false`, `n`, `no` as `false`.
+> It's space trimmed and case insensitive.
+> Any other string values will produce an error.
+
+```go
+To[bool]("y") //> true
+To[bool]("  1 ") //> true
+To[bool](" n  ") //> false
+To[bool](" dsa ") //> false, and error for WithError
+To[string](true) //> "true"
+To[string](complex(-1, -2)) //> "(-1-2i)"
+To[int]("-5") //> int(-5)
+To[int]("+5") //> int(5)
+To[int]("5.6") //> int(0), and error for WithError
+To[float32]("5.6") //> float32(5.6)
+```
+
+| Type S | Type A    | S from/to A        |
+|--------|-----------|--------------------|
+| string | ints      | :white_check_mark: |
+| string | uints     | :white_check_mark: |
+| string | floats    | :white_check_mark: |
+| string | complexes | :white_check_mark: |
+| string | bool      | :white_check_mark: |
+
+### Boolean to Number Types Casting (BoolNumCast)
+> Casting between boolean and number types.
+> `true` alway will be `1` if cast to number or `1+0i` for complexes.
+> Number will `true` if value isn't equal `0`. For complexes only
+> real part is matter.
+
+```go
+To[int](true) //> int(1)
+To[int](false) //> int(0)
+To[bool](int(0)) //> false
+To[bool](int(-1)) //> true
+To[bool](uint(1)) //> true
+To[bool](complex(0, 5)) //> false, so only real part matter
+To[bool](complex(5, 0)) //> true
+``` 
+
+| Type B | Cast N    | B from/to N        |
+|--------|-----------|--------------------|
+| bool   | ints      | :white_check_mark: |
+| bool   | uints     | :white_check_mark: |
+| bool   | floats    | :white_check_mark: |
+| bool   | complexes | :white_check_mark: |
+
 ## :link: Similar Projects
 Please, star this repository if you find it helpful :star:  
 Also, [make an issue](https://github.com/the-go-tool/cast/issues)
@@ -116,27 +211,3 @@ if you found a bug or would like for some improvements.
 
 If this module doesn't fit here is links to similar projects:
 - :link: https://github.com/spf13/cast
-
-## :arrows_counterclockwise: Default Casts
-
-| Cast From | Cast To   | Possible | Versa |
-|-----------|-----------|----------|-------|
-| string    | ints      | YES      | YES   |
-| string    | uints     | YES      | YES   |
-| string    | floats    | YES      | YES   |
-| string    | complexes | YES      | YES   |
-| string    | bool      | YES      | YES   |
-| ints      | ints      | YES      | YES   |
-| ints      | uints     | YES      | YES   |
-| ints      | floats    |          |       |
-| ints      | complexes |          |       |
-| ints      | bool      | YES      | YES   |
-| uints     | uints     | YES      | YES   |
-| uints     | floats    |          |       |
-| uints     | complexes |          |       |
-| uints     | bool      | YES      | YES   |
-| floats    | floats    |          |       |
-| floats    | complexes |          |       |
-| floats    | bool      |          |       |
-| complexes | complexes |          |       |
-| complexes | bool      |          |       |
