@@ -111,7 +111,7 @@ _int -> string_ casters just register chain _Custom -> int -> string_.
 
 ## :arrows_counterclockwise: Built-in Casters
 
-### Related Types Cross Casting (RelatedXCast)
+### Related Cross Casting (RelatedXCast)
 > Casting between related types but different sizes.
 
 ```go
@@ -129,7 +129,7 @@ To[rune](int(50)) //> int32(50), so rune is alias for int32
 | floats    | :white_check_mark: |
 | complexes | :white_check_mark: |
 
-### Number Types Cross Casting (NumberXCast)
+### Number Cross Casting (NumberXCast)
 > Casting between number types (with possible different sizes).
 
 ```go

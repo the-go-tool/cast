@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/the-go-tool/cast/core"
-	"github.com/the-go-tool/cast/core/types"
 )
 
 // Built-in casters registration.
@@ -15,6 +14,7 @@ func init() {
 	registerNumberXCast()
 	registerStringXCast()
 	registerBoolNumCast()
+	registerCatchers()
 }
 
 // Register adds new way to cast one type to another.
@@ -110,9 +110,9 @@ func Assert[In, Out any](in In, out Out) error {
 	if err != nil {
 		return err
 	}
-	inT := types.GetName(reflect.TypeOf(in))
-	outT := types.GetName(reflect.TypeOf(out))
-	valT := types.GetName(reflect.TypeOf(val))
+	inT := reflect.TypeOf(in)
+	outT := reflect.TypeOf(out)
+	valT := reflect.TypeOf(val)
 	if !reflect.DeepEqual(val, out) {
 		return fmt.Errorf("expected %s(%#v), got %s(%#v) from %s(%#v)", outT, out, valT, val, inT, in)
 	}
@@ -129,8 +129,8 @@ func Assert[In, Out any](in In, out Out) error {
 //   err := Assert(Custom(5), 5)
 func AssertError[In, Out any](in In, out Out) error {
 	_, err := WithError[Out](in)
-	inT := types.GetName(reflect.TypeOf(in))
-	outT := types.GetName(reflect.TypeOf(out))
+	inT := reflect.TypeOf(in)
+	outT := reflect.TypeOf(out)
 	if err == nil {
 		return fmt.Errorf("unexpected successful casting from %s(%#v) to %s(%#v)", inT, in, outT, out)
 	}

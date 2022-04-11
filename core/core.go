@@ -5,29 +5,25 @@ import (
 	"reflect"
 
 	"github.com/the-go-tool/cast/core/casters"
+	"github.com/the-go-tool/cast/core/catchers"
 )
 
 // Cast general logic which helps to find and use available from-to casting function.
 func Cast(in reflect.Value, to reflect.Type) (out reflect.Value, err error) {
-	// A -> A
-	if in.Type() == to {
-		return in, nil
-	}
-
-	// A -> B
+	// Regular casting way search
 	cst := casters.Get(in.Type(), to)
 	if cst != nil {
 		return cst(in)
 	}
 
-	if cst == nil {
-		return out, fmt.Errorf("unknown caster [%s -> %s]", in.Type(), to)
+	// Find and execute suitable catcher
+	out, err = catchers.Process(in, to)
+	if err == nil {
+		return out, nil
 	}
 
-	//TODO: unwrap in and wrap out at out
-	out, err = cst(Deref(in))
-	if err != nil {
-		return out, err
+	if cst == nil {
+		return out, fmt.Errorf("unknown caster [%s -> %s]", in.Type(), to)
 	}
 
 	return out, nil
@@ -57,13 +53,4 @@ func RegisterProxy(from reflect.Type, to reflect.Type, proxy reflect.Type) error
 		return outV, nil
 	}
 	return Register(from, to, caster)
-}
-
-// Deref accepts any referenced value and deep dereferences it.
-func Deref(val reflect.Value) reflect.Value {
-	v := val
-	for v.Kind() == reflect.Ptr {
-		v = v.Elem()
-	}
-	return v
 }

@@ -1,3 +1,4 @@
+// package casters allows to manipulate from-to types casters.
 package casters
 
 import (
