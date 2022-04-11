@@ -1,6 +1,6 @@
 [![GoDoc](https://godoc.org/github.com/the-go-tool/cast?status.svg)](https://godoc.org/github.com/the-go-tool/cast)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/the-go-tool/cast)
-![Coverage](https://img.shields.io/badge/Coverage-92.7%25-brightgreen)
+![Coverage](https://img.shields.io/badge/Coverage-91.6%25-brightgreen)
 [![Go Report Card](https://goreportcard.com/badge/github.com/the-go-tool/cast)](https://goreportcard.com/report/github.com/the-go-tool/cast)
 [![codebeat badge](https://codebeat.co/badges/9c37fc37-7990-4498-bf70-a213abf6fbfe)](https://codebeat.co/projects/github-com-the-go-tool-cast-init)
 ![example workflow](https://github.com/the-go-tool/cast/actions/workflows/.github/workflows/ci.yaml/badge.svg)
